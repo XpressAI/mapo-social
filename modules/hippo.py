@@ -90,7 +90,7 @@ class MemoryOrchestrator(TextMessageHandlerProtocol):
         search_results = await self.mid_term_memory.search_memory(text, self.mid_term_memory_size)
         mid_results = LLMMessage.user(
             self.mid_term_memory_prefix+"\n"+
-            "\n".join(f"{m.id}. {m.attributes['summary']}" for m in search_results)
+            "\n".join(f"{m.memory_id}. {m.attributes.get('summary', '') if m.attributes else ''}" for m in search_results)
         )
 
         await self.history.clear_history()
@@ -123,7 +123,7 @@ class MemoryOrchestrator(TextMessageHandlerProtocol):
             ])
         )
         if result.tool_calls is not None:
-            return any(result.tool_calls[0].name == "useful" for result in result.tool_calls)
+            return any(r.name == "useful" for r in result.tool_calls)
         else:
             return False
 
@@ -138,7 +138,7 @@ class MemoryOrchestrator(TextMessageHandlerProtocol):
             ])
         )
         if result.tool_calls is not None:
-            return any(result.tool_calls[0].name == "useful" for result in result.tool_calls)
+            return any(r.name == "useful" for r in result.tool_calls)
         else:
             return False
 
@@ -149,7 +149,7 @@ class MemoryOrchestrator(TextMessageHandlerProtocol):
                 LLMMessage.user(memory)
             ]
         )
-        return result.content.strip()
+        return result.content.strip() if result.content else ""
 
     async def create_memory(self, history: list[LLMMessage]) -> str:
         result = await self.llm.generate(
@@ -157,11 +157,11 @@ class MemoryOrchestrator(TextMessageHandlerProtocol):
                 LLMMessage.user(self.create_memory_prompt),
             ]
         )
-        return result.content.strip()
+        return result.content.strip() if result.content else ""
 
     async def add_memory(self, new_memory: str) -> None:
         if len(self.memory_data) >= self.memory_size:
-            last_memory = self.memory_data.pop()
+            last_memory = self.memory_data.pop(0)
             await self.mid_term_memory.store_memory(last_memory, {"summary": await self._summarize(last_memory), "text": last_memory} )
 
         self.memory_data.append(new_memory)
@@ -172,7 +172,7 @@ class MemoryOrchestrator(TextMessageHandlerProtocol):
             LLMMessage.system(self.create_memory_summary_prompt),
             LLMMessage.user(memory)
         ])
-        return result.content.strip()
+        return result.content.strip() if result.content else ""
 
     async def _save_memories(self) -> None:
         pathlib.Path(self.memory_file).parent.mkdir(parents=True, exist_ok=True)
