@@ -1,18 +1,18 @@
 id: example
 description: An example agent that uses tools
 modules:
-  - module: xaibo.primitives.modules.llm.openai.OpenAILLM
+  - module: modules.local_llm.LocalLLM
     id: thalamus-llm
     config:
-      model: gpt-4.1
-  - module: xaibo.primitives.modules.llm.openai.OpenAILLM
+      model_name: Qwen/Qwen2.5-3B-Instruct
+  - module: modules.local_llm.LocalLLM
     id: memory-llm
     config:
-      model: gpt-4.1
-  - module: xaibo.primitives.modules.llm.openai.OpenAILLM
+      model_name: Qwen/Qwen2.5-3B-Instruct
+  - module: modules.local_llm.LocalLLM
     id: pfc-llm
     config:
-      model: gpt-4.1
+      model_name: Qwen/Qwen2.5-3B-Instruct
   - id: mcp-tools
     module: xaibo.primitives.modules.tools.mcp_tool_provider.MCPToolProvider
     config:
