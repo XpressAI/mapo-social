@@ -6,7 +6,7 @@ modules:
     config:
       model: gpt-4.1
   - id: mcp-tools
-    module: modules.mcp_tool_provider.MCPToolProvider
+    module: xaibo.primitives.modules.tools.mcp_tool_provider.MCPToolProvider
     config:
       timeout: 60.0
       servers:

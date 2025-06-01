@@ -80,22 +80,24 @@ class MemoryOrchestrator(TextMessageHandlerProtocol):
             text: The incoming text message to process with memory context
         """
         orig_history = list(await self.history.get_history())
+        await self.history.clear_history()
 
         useful_memory_list = [memory for memory in self.memory_data if await self._is_useful_memory(memory, orig_history)]
-        useful_memories = LLMMessage.user(
-            self.short_term_memory_prefix+"\n"+
-            "\n".join(useful_memory_list)
-        )
+        if len(useful_memory_list) > 0:
+            useful_memories = LLMMessage.user(
+                self.short_term_memory_prefix+"\n"+
+                "\n".join(useful_memory_list)
+            )
+            await self.history.add_message(useful_memories)
 
         search_results = await self.mid_term_memory.search_memory(text, self.mid_term_memory_size)
-        mid_results = LLMMessage.user(
-            self.mid_term_memory_prefix+"\n"+
-            "\n".join(f"{m.memory_id}. {m.attributes.get('summary', '') if m.attributes else ''}" for m in search_results)
-        )
+        if len(search_results) > 0:
+            mid_results = LLMMessage.user(
+                self.mid_term_memory_prefix+"\n"+
+                "\n".join(f"{m.memory_id}. {m.attributes.get('summary', '') if m.attributes else ''}" for m in search_results)
+            )
+            await self.history.add_message(mid_results)
 
-        await self.history.clear_history()
-        await self.history.add_message(useful_memories)
-        await self.history.add_message(mid_results)
         for msg in orig_history:
             await self.history.add_message(msg)
 
