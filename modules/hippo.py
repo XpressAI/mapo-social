@@ -11,6 +11,16 @@ import json
 
 
 class MemoryOrchestrator(TextMessageHandlerProtocol):
+    """A memory management system that orchestrates short-term and mid-term memory for conversational AI.
+
+    The MemoryOrchestrator maintains two types of memory:
+    1. Short-term memory: Recent, immediately accessible memories stored in memory_data
+    2. Mid-term memory: Older, searchable memories stored via MemoryProtocol
+
+    It continuously evaluates memory usefulness, rewrites memories for better utility,
+    and manages the transition of memories from short-term to mid-term storage.
+    """
+
     def __init__(self,
                  llm: LLMProtocol,
                  memory: MemoryProtocol,
@@ -18,7 +28,19 @@ class MemoryOrchestrator(TextMessageHandlerProtocol):
                  history: ConversationHistoryProtocol,
                  config: dict | None = None
                 ):
-        """Initialize the MemoryOrchestrator."""
+        """Initialize the MemoryOrchestrator with required components and configuration.
+    
+        Args:
+            llm: Language model for memory operations and decision making
+            memory: Protocol for storing and retrieving mid-term memories
+            doer: Handler for processing text messages with memory context
+            history: Protocol for accessing conversation history
+            config: Optional configuration dictionary with the following keys:
+                - memory_size: Maximum number of short-term memories (default: 10)
+                - mid_term_memory_size: Number of mid-term memories to retrieve (default: 3)
+                - memory_file: File path for persisting short-term memories (default: 'short-term-memory.json')
+                - Various prompt templates for memory operations
+        """
         config = config or {}
         self.llm: LLMProtocol = llm
         self.mid_term_memory: MemoryProtocol = memory
@@ -45,10 +67,17 @@ class MemoryOrchestrator(TextMessageHandlerProtocol):
             self.memory_data = []
 
     async def handle_text(self, text: str) -> None:
-        """Handle an incoming text message.
-
+        """Process incoming text message with memory-aware context management.
+    
+        This method:
+        1. Evaluates and filters useful memories for the current context
+        2. Retrieves relevant mid-term memories
+        3. Creates a memory-enhanced context for message processing
+        4. Updates and maintains memory store based on conversation outcome
+        5. Creates new memories from the conversation
+    
         Args:
-            text: The text message to handle
+            text: The incoming text message to process with memory context
         """
         orig_history = list(await self.history.get_history())
 
