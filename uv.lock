@@ -864,7 +864,7 @@ requires-dist = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-cov", specifier = ">=6.1.1" },
     { name = "tabulate", specifier = ">=0.9.0" },
-    { name = "xaibo", extras = ["local", "openai", "webserver"], specifier = ">=0.1.5" },
+    { name = "xaibo", extras = ["local", "openai", "webserver"], specifier = ">=0.1.6" },
 ]
 
 [[package]]
@@ -2675,7 +2675,7 @@ wheels = [
 
 [[package]]
 name = "xaibo"
-version = "0.1.5"
+version = "0.1.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -2688,9 +2688,9 @@ dependencies = [
     { name = "questionary" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/69/b2/2a9501a8c296d8ffd802b87c03fabea39631a91b43f4509897e9685782b3/xaibo-0.1.5.tar.gz", hash = "sha256:bdc6fa4a7a117cdac3c6436ca658432c9b3b01d6e8bf947d8f741b9b0a28e13a", size = 1859267, upload-time = "2025-06-01T08:15:11.383Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d5/aa/1dfbb83646ca34951c8fd6802e72364a743cfc137d5f90ca0f4d4458d4df/xaibo-0.1.6.tar.gz", hash = "sha256:33142a46e023e1147488b86e51075905e879d73a48fff66988c86645a69b01a2", size = 1860473, upload-time = "2025-06-01T17:19:37.639Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/03/05/c7a2e82fa414a97f406c60eb02e7fcf3180616ed2e8dc4b0bfa9c95d850f/xaibo-0.1.5-py3-none-any.whl", hash = "sha256:c39196d1e4215a1b2b876a35db7cf948769074287ea7c282db5b39820ab27f81", size = 582176, upload-time = "2025-06-01T08:15:08.875Z" },
+    { url = "https://files.pythonhosted.org/packages/63/57/11238b8a28334269a5592a3db3a0ccc10d691b12704e2089d8356c906dc0/xaibo-0.1.6-py3-none-any.whl", hash = "sha256:66ba60cc481a81835bdc69f17c132dfa76da1b8215df269b318f36b3f5fd15fd", size = 582977, upload-time = "2025-06-01T17:19:35.342Z" },
 ]
 
 [package.optional-dependencies]
