@@ -1,18 +1,19 @@
 id: example
 description: An example agent that uses tools
 modules:
-  - module: modules.local_llm.LocalLLM
+  - module: xaibo.primitives.modules.llm.openai.OpenAILLM
     id: thalamus-llm
     config:
-      model_name: Qwen/Qwen2.5-3B-Instruct
-  - module: modules.local_llm.LocalLLM
+      model: gpt-4.1-nano
+  - module: xaibo.primitives.modules.llm.openai.OpenAILLM
     id: memory-llm
     config:
-      model_name: Qwen/Qwen2.5-3B-Instruct
-  - module: modules.local_llm.LocalLLM
+      model: gpt-4.1-mini
+  - module: xaibo.primitives.modules.llm.openai.OpenAILLM
     id: pfc-llm
     config:
-      model_name: Qwen/Qwen2.5-3B-Instruct
+      model: o4-mini
+      temperature: 1.0
   - id: mcp-tools
     module: xaibo.primitives.modules.tools.mcp_tool_provider.MCPToolProvider
     config:
@@ -109,6 +110,34 @@ modules:
     id: hippo
     config:
       memory_file: "./memory/short_term.json"
+      rewrite_memory_prompt: |
+        You are tasked with improving a memory to make it more useful for future recall and application. This process involves analyzing the existing memory, identifying areas for enhancement, and rewriting it in a more structured and informative manner.
+
+        To complete this task, follow these steps:
+
+        1. Analyze the given memory:
+           - Identify the main topic or concept
+           - Note any key details, facts, or experiences
+           - Recognize any gaps in information or areas that could be expanded upon
+
+        2. Rewrite the memory using these guidelines:
+           - Organize the information in a logical structure
+           - Add relevant context or background information
+           - Expand on important details or concepts
+           - Include any potential applications or future uses of this information
+           - Incorporate mnemonics or memory techniques if applicable
+           - Ensure the rewritten memory is clear, concise, and easy to understand
+
+        3. After rewriting, briefly explain how the improvements make the memory more useful for future recall and application.
+
+        Remember to focus on making the memory more comprehensive, structured, and applicable for future use.
+        
+        Present your response in the following format:
+        <rewritten_memory>
+        [Insert the rewritten, improved memory here]
+        </rewritten_memory>
+        
+        Here is the memory to be rewritten:
 exchange:
   - module: tool-collector
     protocol: ToolProviderProtocol
