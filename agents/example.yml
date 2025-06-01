@@ -2,7 +2,15 @@ id: example
 description: An example agent that uses tools
 modules:
   - module: xaibo.primitives.modules.llm.openai.OpenAILLM
-    id: llm
+    id: thalamus-llm
+    config:
+      model: gpt-4.1
+  - module: xaibo.primitives.modules.llm.openai.OpenAILLM
+    id: memory-llm
+    config:
+      model: gpt-4.1
+  - module: xaibo.primitives.modules.llm.openai.OpenAILLM
+    id: pfc-llm
     config:
       model: gpt-4.1
   - id: mcp-tools
@@ -126,3 +134,12 @@ exchange:
   - module: __entry__
     protocol: TextMessageHandlerProtocol
     provider: hippo
+  - module: pfc
+    protocol: LLMProtocol
+    provider: pfc-llm
+  - module: hippo
+    protocol: LLMProtocol
+    provider: memory-llm
+  - module: thalamus
+    protocol: LLMProtocol
+    provider: thalamus-llm
