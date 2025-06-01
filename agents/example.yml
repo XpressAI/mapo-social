@@ -104,10 +104,16 @@ modules:
 exchange:
   - module: tool-collector
     protocol: ToolProviderProtocol
-    provider: [thalamus, memory-tools]
+    provider: thalamus
+  - module: tool-collector
+    protocol: ToolProviderProtocol
+    provider: memory-tools
   - module: guarded-tool-collector
     protocol: ToolProviderProtocol
-    provider: [response-tool, mcp-tools]
+    provider: response-tool
+  - module: guarded-tool-collector
+    protocol: ToolProviderProtocol
+    provider: mcp-tools
   - module: thalamus
     protocol: ToolProviderProtocol
     provider: guarded-tool-collector

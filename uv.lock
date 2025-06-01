@@ -864,7 +864,7 @@ requires-dist = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-cov", specifier = ">=6.1.1" },
     { name = "tabulate", specifier = ">=0.9.0" },
-    { name = "xaibo", extras = ["local", "openai", "webserver"], specifier = ">=0.1.4" },
+    { name = "xaibo", extras = ["local", "openai", "webserver"], specifier = ">=0.1.5" },
 ]
 
 [[package]]
@@ -2485,16 +2485,16 @@ wheels = [
 
 [[package]]
 name = "uvicorn"
-version = "0.34.2"
+version = "0.34.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "h11" },
     { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a6/ae/9bbb19b9e1c450cf9ecaef06463e40234d98d95bf572fab11b4f19ae5ded/uvicorn-0.34.2.tar.gz", hash = "sha256:0e929828f6186353a80b58ea719861d2629d766293b6d19baf086ba31d4f3328", size = 76815, upload-time = "2025-04-19T06:02:50.101Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/de/ad/713be230bcda622eaa35c28f0d328c3675c371238470abdea52417f17a8e/uvicorn-0.34.3.tar.gz", hash = "sha256:35919a9a979d7a59334b6b10e05d77c1d0d574c50e0fc98b8b1a0f165708b55a", size = 76631, upload-time = "2025-06-01T07:48:17.531Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b1/4b/4cef6ce21a2aaca9d852a6e84ef4f135d99fcd74fa75105e2fc0c8308acd/uvicorn-0.34.2-py3-none-any.whl", hash = "sha256:deb49af569084536d269fe0a6d67e3754f104cf03aba7c11c40f01aadf33c403", size = 62483, upload-time = "2025-04-19T06:02:48.42Z" },
+    { url = "https://files.pythonhosted.org/packages/6d/0d/8adfeaa62945f90d19ddc461c55f4a50c258af7662d34b6a3d5d1f8646f6/uvicorn-0.34.3-py3-none-any.whl", hash = "sha256:16246631db62bdfbf069b0645177d6e8a77ba950cfedbfd093acef9444e4d885", size = 62431, upload-time = "2025-06-01T07:48:15.664Z" },
 ]
 
 [package.optional-dependencies]
@@ -2675,7 +2675,7 @@ wheels = [
 
 [[package]]
 name = "xaibo"
-version = "0.1.4"
+version = "0.1.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -2688,9 +2688,9 @@ dependencies = [
     { name = "questionary" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c3/11/58671669c95910c3cf554e6ea1cf03d3c8ca7d0e2f5b101962528810b3cb/xaibo-0.1.4.tar.gz", hash = "sha256:4af0f7b908b14afb8e2b01b8891a18eee8ea4a090f3727a487dc1c3152fb80f4", size = 1859174, upload-time = "2025-06-01T05:06:09.222Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/69/b2/2a9501a8c296d8ffd802b87c03fabea39631a91b43f4509897e9685782b3/xaibo-0.1.5.tar.gz", hash = "sha256:bdc6fa4a7a117cdac3c6436ca658432c9b3b01d6e8bf947d8f741b9b0a28e13a", size = 1859267, upload-time = "2025-06-01T08:15:11.383Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ba/af/526de4287ca193c62a5ce987c0bac32571bbb2021cb8e994236f10120c41/xaibo-0.1.4-py3-none-any.whl", hash = "sha256:f92c03ff6f369ba5e459cfa5ef22cc83f57e4e70765ab45bd2c28897d12e3c13", size = 582047, upload-time = "2025-06-01T05:06:07.134Z" },
+    { url = "https://files.pythonhosted.org/packages/03/05/c7a2e82fa414a97f406c60eb02e7fcf3180616ed2e8dc4b0bfa9c95d850f/xaibo-0.1.5-py3-none-any.whl", hash = "sha256:c39196d1e4215a1b2b876a35db7cf948769074287ea7c282db5b39820ab27f81", size = 582176, upload-time = "2025-06-01T08:15:08.875Z" },
 ]
 
 [package.optional-dependencies]
