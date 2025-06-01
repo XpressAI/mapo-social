@@ -20,7 +20,7 @@ class Thalamus(ToolProviderProtocol):
                  conversation: ConversationHistoryProtocol, 
                  llm: LLMProtocol,
                  config: Dict[str, str]
-                 ) -> None:
+                 ):
         """Initialize the Thalamus with the given tool provider, conversation and LLM
     
         Args:

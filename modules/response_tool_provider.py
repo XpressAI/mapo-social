@@ -4,7 +4,7 @@ from xaibo.core.protocols import ConversationHistoryProtocol, LLMProtocol, ToolP
 from xaibo.core.protocols.tools import ToolResult, Tool
 
 class ResponseToolProvider(ToolProviderProtocol):
-    def __init__(self, response: ResponseProtocol):
+    def __init__(self, response: ResponseProtocol, config: Dict[str, Any] = None):
         self.response = response
 
     async def list_tools(self) -> List[Tool]:

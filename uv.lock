@@ -418,7 +418,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
@@ -860,7 +860,7 @@ dependencies = [
 requires-dist = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "pytest-cov", specifier = ">=6.1.1" },
-    { name = "xaibo", extras = ["openai", "webserver", "local"], specifier = ">=0.1.3" },
+    { name = "xaibo", extras = ["local", "openai", "webserver"], specifier = ">=0.1.4" },
 ]
 
 [[package]]
@@ -2596,7 +2596,7 @@ wheels = [
 
 [[package]]
 name = "xaibo"
-version = "0.1.3"
+version = "0.1.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -2609,9 +2609,9 @@ dependencies = [
     { name = "questionary" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2d/9c/d0885493523c6b3b94a2e47b931fd35d99f9ff88bf680d3e70ff1a9133ff/xaibo-0.1.3.tar.gz", hash = "sha256:258aa879050710fc64a0904f04c91a10605238d36eb0d82e5fa2449bd4d998b8", size = 1857460, upload-time = "2025-05-30T23:20:58.208Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c3/11/58671669c95910c3cf554e6ea1cf03d3c8ca7d0e2f5b101962528810b3cb/xaibo-0.1.4.tar.gz", hash = "sha256:4af0f7b908b14afb8e2b01b8891a18eee8ea4a090f3727a487dc1c3152fb80f4", size = 1859174, upload-time = "2025-06-01T05:06:09.222Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/66/fc/9ec82e11c7a23028ff9d0ad7e7879519d0a205b4b82e7523afbbbdd4628e/xaibo-0.1.3-py3-none-any.whl", hash = "sha256:497d98a60533eab47d2535b9bd633d8f911ae0c3d32adaeedaa607f415721f2e", size = 580860, upload-time = "2025-05-30T23:20:56.087Z" },
+    { url = "https://files.pythonhosted.org/packages/ba/af/526de4287ca193c62a5ce987c0bac32571bbb2021cb8e994236f10120c41/xaibo-0.1.4-py3-none-any.whl", hash = "sha256:f92c03ff6f369ba5e459cfa5ef22cc83f57e4e70765ab45bd2c28897d12e3c13", size = 582047, upload-time = "2025-06-01T05:06:07.134Z" },
 ]
 
 [package.optional-dependencies]

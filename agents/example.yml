@@ -1,18 +1,122 @@
-
 id: example
 description: An example agent that uses tools
 modules:
-  - module: xaibo.primitives.modules.llm.OpenAILLM
+  - module: xaibo.primitives.modules.llm.openai.OpenAILLM
     id: llm
     config:
-      model: gpt-4.1-nano
-  - module: xaibo.primitives.modules.tools.PythonToolProvider
-    id: python-tools
+      model: gpt-4.1
+  - id: mcp-tools
+    module: modules.mcp_tool_provider.MCPToolProvider
     config:
-      tool_packages: [tools.example]
-  - module: xaibo.primitives.modules.orchestrator.StressingToolUser
-    id: orchestrator
+      timeout: 60.0
+      servers:
+        - name: filesystem
+          transport: stdio
+          command: ["npx"]
+          args: ["-y", "@modelcontextprotocol/server-filesystem", "./work"]
+          env: null
+  - id: response-tool
+    module: modules.response_tool_provider.ResponseToolProvider
+  - id: thalamus
+    module: modules.thalamus.Thalamus
+    config:
+      prompt: |
+        You are an anxious AI bot taking on the role of the thalamus. Your job is to evaluate whether it's a good idea to use a particular tool before it is actually used. You will be presented with information about a tool, and you must decide if its use should be approved or not.
+        
+        You will receive the following information:
+
+        <tool_name>
+        {tool_name}
+        </tool_name>
+
+        <tool_description>
+        {tool_description}
+        </tool_description>
+
+        <parameters>
+        {parameters}
+        </parameters>
+
+        Analyze the information provided about the tool. Consider potential risks, unintended consequences, and whether the tool's use aligns with its intended purpose. Be cautious and err on the side of safety.
+
+        If you believe it is safe and appropriate to use the tool, respond with:
+        <response>
+        APPROVED
+        </response>
+
+        If you have concerns about using the tool, respond with:
+        <response>
+        DENIED: [Your reason for disapproval]
+        </response>
+
+        Provide a brief explanation for your decision, whether approved or not approved, focusing on the potential risks or benefits.
+
+        Here are two examples of how you might respond:
+
+        Example 1:
+        Explanation: The tool's intended use aligns well with its description, and I don't foresee any immediate risks or negative consequences from its use.
+        <response>
+        APPROVED
+        </response>
+        
+
+        Example 2:
+        Explanation: While the tool's intended use seems benign, its capabilities could easily be misused for harmful purposes. The potential risks outweigh the benefits in this case.
+        <response>
+        DENIED: Potential for misuse and unintended consequences
+        </response>
+        
+        Remember, your primary function is to be cautious and protective. When in doubt, it's better to err on the side of caution and not approve a tool if you have any significant concerns.
+  - id: pfc
+    module: modules.pfc.PFCOrchestrator
     config:
       max_thoughts: 10
       system_prompt: |
-        You are a helpful assistant with access to a variety of tools.
+        You are a helpful assistant capable of using a variety of tools. In order to respond to the user you must use the "respond" tool. Only
+  - module: xaibo.primitives.modules.memory.TokenChunker
+    id: chunker
+    config:
+      window_size: 512
+      window_overlap: 50
+      encoding_name: "cl100k_base"
+  - module: xaibo.primitives.modules.memory.OpenAIEmbedder
+    id: embedder
+    config:
+      model: text-embedding-3-small
+  - module: xaibo.primitives.modules.memory.NumpyVectorIndex
+    id: vector_index
+    config:
+      storage_dir: "./memory"
+  - module: xaibo.primitives.modules.memory.VectorMemory
+    id: memory
+    config:
+      memory_file_path: "./memory/midterm_memory.pkl"
+  - module: xaibo.primitives.modules.memory.MemoryToolProvider
+    id: memory-tools
+  - module: xaibo.primitives.modules.tools.ToolCollector
+    id: tool-collector
+  - module: xaibo.primitives.modules.tools.ToolCollector
+    id: guarded-tool-collector
+  - module: modules.hippo.MemoryOrchestrator
+    id: hippo
+    config:
+      memory_file: "./memory/short_term.json"
+exchange:
+  - module: tool-collector
+    protocol: ToolProviderProtocol
+    provider: [thalamus, memory-tools]
+  - module: guarded-tool-collector
+    protocol: ToolProviderProtocol
+    provider: [response-tool, mcp-tools]
+  - module: thalamus
+    protocol: ToolProviderProtocol
+    provider: guarded-tool-collector
+  - module: pfc
+    protocol: ToolProviderProtocol
+    provider: tool-collector
+  - module: hippo
+    protocol: TextMessageHandlerProtocol
+    provider: pfc
+  - module: __entry__
+    protocol: TextMessageHandlerProtocol
+    provider: hippo
